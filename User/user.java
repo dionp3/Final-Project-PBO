@@ -1,3 +1,4 @@
-class User{
-    
+public class user{
+    private username;
+    private password;
 }
