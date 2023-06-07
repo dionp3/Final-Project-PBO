@@ -55,7 +55,7 @@
             <Label layoutX="26.0" layoutY="89.0" text="ID User" />
             <TextField layoutX="107.0" layoutY="85.0" />
             <Button layoutX="267.0" layoutY="85.0" mnemonicParsing="false" text="Cari" />
-            <TableView layoutX="6.0" layoutY="274.0" prefHeight="295.0" prefWidth="561.0">
+            <TableView layoutX="5.0" layoutY="158.0" prefHeight="317.0" prefWidth="561.0">
                <columns>
                   <TableColumn prefWidth="73.0" text="ID User" />
                   <TableColumn prefWidth="74.0" text="Nama" />
@@ -67,6 +67,7 @@
                   <TableColumn prefWidth="81.0" text="Tgl Tempo" />
                </columns>
             </TableView>
+            <Button layoutX="475.0" layoutY="487.0" mnemonicParsing="false" text="Delete" />
          </children>
       </Pane>
    </children>
