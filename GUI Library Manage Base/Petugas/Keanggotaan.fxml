@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="575.0" prefWidth="174.0" style="-fx-background-color: E5BA73;">
+         <children>
+            <ImageView fitHeight="125.0" fitWidth="180.0" layoutX="-3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/kembalikan.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="jlabel_buku" layoutX="72.0" layoutY="203.0" text="Buku">
+               <font>
+                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="jlabel_kembali" layoutX="44.0" layoutY="263.0" text="Pengembalian">
+               <font>
+                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="jlabel_logout" layoutX="69.0" layoutY="354.0" text="Logout">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="jlabel_pinjam" layoutX="50.0" layoutY="233.0" text="Peminjaman">
+               <font>
+                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label layoutX="65.0" layoutY="176.0" text="Member">
+               <font>
+                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Pane layoutX="173.0" prefHeight="575.0" prefWidth="587.0" style="-fx-background-color: FAEAB1;" />
+   </children>
+</Pane>
