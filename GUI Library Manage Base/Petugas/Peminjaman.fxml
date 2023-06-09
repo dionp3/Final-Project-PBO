@@ -21,43 +21,26 @@
                   <Image url="@../image/kembalikan.png" />
                </image>
             </ImageView>
-            <Label fx:id="jlabel_buku" layoutX="77.0" layoutY="199.0" text="Buku">
+            <Button fx:id="btn_member" layoutY="200.0" mnemonicParsing="false" onAction="#SwitchToMember" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: E5BA73;" text="Member">
                <font>
-                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+                  <Font name="Arial Bold" size="12.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label fx:id="jlabel_kembali" layoutX="49.0" layoutY="259.0" text="Pengembalian">
+            </Button>
+            <Button fx:id="btn_buku" layoutY="230.0" mnemonicParsing="false" onAction="#SwitchToBuku" prefHeight="25.0" prefWidth="195.0" style="-fx-background-color: E5BA73;" text="Buku">
                <font>
-                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+                  <Font name="Arial Bold" size="12.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label fx:id="jlabel_logout" layoutX="74.0" layoutY="350.0" text="Logout">
+            </Button>
+            <Button fx:id="btn_peminjaman" layoutY="260.0" mnemonicParsing="false" onAction="#SwitchToPeminjaman" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: E5BA73;" text="Peminjaman">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="Arial Bold" size="12.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label fx:id="jlabel_pinjam" layoutX="55.0" layoutY="229.0" text="Peminjaman">
+            </Button>
+            <Button fx:id="btn_pengembalian" layoutY="290.0" mnemonicParsing="false" onAction="#SwitchToPengembalian" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: E5BA73;" text="Pengembalian">
                <font>
-                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
+                  <Font name="Arial Bold" size="12.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Label>
-            <Label layoutX="70.0" layoutY="172.0" text="Member">
-               <font>
-                  <Font name="Lucida Sans Demibold Italic" size="12.0" />
-               </font>
-            </Label>
+            </Button>
          </children>
       </Pane>
       <Pane layoutX="189.0" prefHeight="575.0" prefWidth="573.0" style="-fx-background-color: FAEAB1;">
@@ -78,32 +61,32 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <TextField layoutX="25.0" layoutY="113.0">
+            <TextField fx:id="textfield_iduser" layoutX="25.0" layoutY="113.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TextField>
-            <TextField layoutX="25.0" layoutY="169.0">
+            <TextField fx:id="textfield_nama" layoutX="25.0" layoutY="169.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TextField>
-            <TextField layoutX="25.0" layoutY="225.0">
+            <TextField fx:id="textfield_NisnNip" layoutX="25.0" layoutY="225.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TextField>
-            <TextField layoutX="183.0" layoutY="113.0" prefHeight="25.0" prefWidth="180.0">
+            <TextField fx:id="textfield_status" layoutX="183.0" layoutY="113.0" prefHeight="25.0" prefWidth="180.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TextField>
-            <TextField layoutX="183.0" layoutY="169.0" prefHeight="25.0" prefWidth="180.0">
+            <TextField fx:id="textfield_idbuku" layoutX="183.0" layoutY="169.0" prefHeight="25.0" prefWidth="180.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TextField>
-            <TextField layoutX="183.0" layoutY="225.0" prefHeight="25.0" prefWidth="180.0">
+            <TextField fx:id="textfield_judul" layoutX="183.0" layoutY="225.0" prefHeight="25.0" prefWidth="180.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -112,13 +95,13 @@
             <Label layoutX="25.0" layoutY="152.0" text="Nama" />
             <Label layoutX="27.0" layoutY="208.0" text="NIS/NIP" />
             <Label layoutX="187.0" layoutY="96.0" text="Status" />
-            <DatePicker layoutX="373.0" layoutY="113.0" prefHeight="25.0" prefWidth="180.0">
+            <DatePicker fx:id="textfield_tglpinjam" layoutX="373.0" layoutY="113.0" prefHeight="25.0" prefWidth="180.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </DatePicker>
             <Label layoutX="373.0" layoutY="96.0" text="Tanggal Pinjam" />
-            <DatePicker layoutX="373.0" layoutY="169.0" prefHeight="25.0" prefWidth="180.0">
+            <DatePicker fx:id="textfield_tgltempo" layoutX="373.0" layoutY="169.0" prefHeight="25.0" prefWidth="180.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -126,29 +109,29 @@
             <Label layoutX="372.0" layoutY="152.0" text="Tanggal Tempo" />
             <Label layoutX="183.0" layoutY="152.0" text="ID Buku" />
             <Label layoutX="183.0" layoutY="208.0" text="Judul" />
-            <Button layoutX="432.0" layoutY="225.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="Add">
+            <Button fx:id="btn_add" layoutX="373.0" layoutY="225.0" mnemonicParsing="false" onAction="#AddToTabelPinjam" prefHeight="25.0" prefWidth="45.0" text="Add">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="373.0" layoutY="225.0" mnemonicParsing="false" text="Reset">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <TableView layoutX="6.0" layoutY="280.0" prefHeight="287.0" prefWidth="561.0">
+            <TableView fx:id="tabel_peminjaman" layoutX="6.0" layoutY="280.0" prefHeight="287.0" prefWidth="561.0">
               <columns>
-                <TableColumn prefWidth="73.0" text="ID User" />
-                <TableColumn prefWidth="74.0" text="Nama" />
-                  <TableColumn prefWidth="54.0" text="NIS/NIP" />
-                  <TableColumn prefWidth="52.0" text="Status" />
-                  <TableColumn prefWidth="70.0" text="ID Buku" />
-                  <TableColumn prefWidth="71.0" text="Judul" />
-                  <TableColumn prefWidth="85.0" text="Tgl Pinjam" />
-                  <TableColumn prefWidth="81.0" text="Tgl Tempo" />
+                <TableColumn fx:id="tabel_iduser" prefWidth="73.0" text="ID User" />
+                <TableColumn fx:id="tabel_nama" prefWidth="68.0" text="Nama" />
+                  <TableColumn fx:id="tabel_NisnNip" prefWidth="64.0" text="NISN/NIP" />
+                  <TableColumn fx:id="tabel_status" prefWidth="48.0" text="Status" />
+                  <TableColumn fx:id="tabel_idbuku" prefWidth="70.0" text="ID Buku" />
+                  <TableColumn fx:id="tabel_judul" prefWidth="71.0" text="Judul" />
+                  <TableColumn fx:id="tabel_tglpinjam" prefWidth="85.0" text="Tgl Pinjam" />
+                  <TableColumn fx:id="tabel_tgltempo" prefWidth="81.0" text="Tgl Tempo" />
               </columns>
             </TableView>
          </children>
       </Pane>
+      <Button fx:id="btn_logout" layoutY="485.0" mnemonicParsing="false" onAction="#ToLogout" prefHeight="25.0" prefWidth="189.0" style="-fx-background-color: E5BA73;" text="Logout">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
