@@ -88,10 +88,6 @@
                               <Component id="jLabel1" min="-2" pref="73" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="jTextField_uname" min="-2" pref="251" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel_username" min="-2" max="-2" attributes="0"/>
@@ -108,6 +104,7 @@
                                       <Component id="cb_login" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jPasswordField_pw" min="-2" pref="251" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jTextField_uname" min="-2" pref="251" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                           </Group>
