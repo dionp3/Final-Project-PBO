@@ -4,7 +4,13 @@
  */
 package library_managebase_byteam6;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -49,6 +55,7 @@ public class Member extends javax.swing.JFrame {
         tabel_member = new javax.swing.JTable();
         tf_nama = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        btn_show = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -205,6 +212,15 @@ public class Member extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(197, 137, 64));
         jLabel2.setText("Id User");
 
+        btn_show.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_show.setForeground(new java.awt.Color(197, 137, 64));
+        btn_show.setText("Show");
+        btn_show.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_showActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -213,6 +229,7 @@ public class Member extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane1)
                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -229,14 +246,16 @@ public class Member extends javax.swing.JFrame {
                                 .addComponent(tf_nohp, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)
                                 .addComponent(jLabel8))))
-                    .addComponent(jLabel5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btn_show)
+                        .addGap(8, 8, 8)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel2))
@@ -258,7 +277,9 @@ public class Member extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_add))
-                .addGap(41, 41, 41)
+                .addGap(33, 33, 33)
+                .addComponent(btn_show)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -334,6 +355,38 @@ public class Member extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel_BukuMouseClicked
 
+    private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_lmb","root","1234");
+            Statement st = con.createStatement();
+            String sql = "Select * from member";
+            
+            ResultSet rs = st.executeQuery(sql);
+            java.sql.ResultSetMetaData rsmd = rs.getMetaData();
+            DefaultTableModel model = (DefaultTableModel) tabel_member.getModel();
+            
+            int cols =rsmd.getColumnCount();
+            String[] colName = new String[cols];
+            for(int i=0;i<cols;i++)
+                colName[i] = rsmd.getColumnName(i+1);
+            model.setColumnIdentifiers( colName);
+            String idMember, nama, nisn, nohp, alamat;
+            while(rs.next()){
+                idMember = rs.getString(1);
+                nama = rs.getString(2);
+                nisn = rs.getString(3);
+                nohp = rs.getString(4);
+                alamat = rs.getString(5);
+                String[] row = (idMember, nama, nisn, nohp, alamat);
+                model.addRow(row);
+            }
+            st.close();
+            con.close();
+        }catch(Exception e){
+                JOptionPane.showMessageDialog(this,e.getMessage());
+    }//GEN-LAST:event_btn_showActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -373,6 +426,7 @@ public class Member extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_logout;
+    private javax.swing.JButton btn_show;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
