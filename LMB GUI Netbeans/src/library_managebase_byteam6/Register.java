@@ -4,10 +4,15 @@
  */
 package library_managebase_byteam6;
 
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.font.TextAttribute;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -39,23 +44,26 @@ public class Register extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel_password = new javax.swing.JLabel();
         jLabel_username = new javax.swing.JLabel();
-        jTextField_uname = new javax.swing.JTextField();
-        jPasswordField_pw = new javax.swing.JPasswordField();
+        tf_nisnnip = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jPasswordField_pw1 = new javax.swing.JPasswordField();
         jLabel_password1 = new javax.swing.JLabel();
-        jPasswordField_pw2 = new javax.swing.JPasswordField();
         jLabel_password2 = new javax.swing.JLabel();
-        jPasswordField_pw3 = new javax.swing.JPasswordField();
         jLabel_password3 = new javax.swing.JLabel();
-        jPasswordField_pw4 = new javax.swing.JPasswordField();
+        pw_password = new javax.swing.JPasswordField();
         jLabel_password4 = new javax.swing.JLabel();
         jLabel_password5 = new javax.swing.JLabel();
-        jComboBox_as = new javax.swing.JComboBox<>();
+        cb_regas = new javax.swing.JComboBox<>();
         jButton_reg1 = new javax.swing.JButton();
         jLabel_tolog = new javax.swing.JLabel();
+        lbl_check = new javax.swing.JLabel();
+        tf_username = new javax.swing.JTextField();
+        cb_gender = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        tf_email = new javax.swing.JTextField();
+        tf_alamat = new javax.swing.JTextField();
+        tf_nohp = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -130,12 +138,12 @@ public class Register extends javax.swing.JFrame {
         jLabel_password5.setForeground(new java.awt.Color(197, 137, 64));
         jLabel_password5.setText("Reg as");
 
-        jComboBox_as.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jComboBox_as.setForeground(new java.awt.Color(197, 137, 64));
-        jComboBox_as.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Siswa/Guru" }));
-        jComboBox_as.addActionListener(new java.awt.event.ActionListener() {
+        cb_regas.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cb_regas.setForeground(new java.awt.Color(197, 137, 64));
+        cb_regas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Siswa/Guru" }));
+        cb_regas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_asActionPerformed(evt);
+                cb_regasActionPerformed(evt);
             }
         });
 
@@ -158,13 +166,53 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        lbl_check.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lbl_check.setForeground(new java.awt.Color(197, 137, 64));
+        lbl_check.setText("Check Availability");
+        lbl_check.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_checkMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_checkMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_checkMouseExited(evt);
+            }
+        });
+
+        tf_username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_usernameActionPerformed(evt);
+            }
+        });
+
+        cb_gender.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        cb_gender.setForeground(new java.awt.Color(197, 137, 64));
+        cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
+        cb_gender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_genderActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(197, 137, 64));
+        jLabel3.setText("Gender");
+
+        tf_email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_emailActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,39 +222,47 @@ public class Register extends javax.swing.JFrame {
                             .addComponent(jLabel_password)
                             .addComponent(jLabel_username))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_uname, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField_pw, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_nisnnip, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                            .addComponent(tf_email))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel_password1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField_pw1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel_password2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField_pw2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel_password3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField_pw3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton_reg1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel_tolog)
+                        .addComponent(tf_alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel_password4)
-                            .addComponent(jLabel_password5))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel_password4)
+                                    .addComponent(jLabel_password5))
+                                .addGap(5, 5, 5))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel_password3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton_reg1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel_tolog, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cb_regas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pw_password, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(tf_username)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbl_check)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel_password2)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_as, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField_pw4, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tf_nohp, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -215,32 +271,38 @@ public class Register extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_uname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_nisnnip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_username))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_password)
-                    .addComponent(jPasswordField_pw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField_pw1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_password1))
+                    .addComponent(jLabel_password1)
+                    .addComponent(tf_alamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField_pw2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_password2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPasswordField_pw3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_password3))
+                    .addComponent(jLabel_password2)
+                    .addComponent(tf_nohp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField_pw4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_check)
+                        .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel_password3))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pw_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_password4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_password5)
-                    .addComponent(jComboBox_as, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_regas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_password5))
                 .addGap(12, 12, 12)
                 .addComponent(jButton_reg1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -302,9 +364,9 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox_asActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_asActionPerformed
+    private void cb_regasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_regasActionPerformed
 
-    }//GEN-LAST:event_jComboBox_asActionPerformed
+    }//GEN-LAST:event_cb_regasActionPerformed
 
     private void jLabel_tologMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_tologMouseClicked
         Login login = new Login();
@@ -315,10 +377,146 @@ public class Register extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_jLabel_tologMouseClicked
+public void insertDataRegister(String NISNNIP, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
+try{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String sqlusername="db_LibraryManageBase";
+        String sqlpassword = "1234";
+        
+        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
 
+        String sql = "INSERT INTO register (NISNNIP, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, NISNNIP);
+        pst.setString(2, email);
+        pst.setString(3, alamat);
+        pst.setString(4, nohp);
+        pst.setString(5, username);
+        pst.setString(6, password);
+        pst.setString(7, regas);
+        pst.setString(8, gender);
+        pst.execute();
+        JOptionPane.showMessageDialog(null, "Anda berhasil melakukan register!");
+        tf_nisnnip.setText("");
+        tf_email.setText("");
+        tf_alamat.setText("");
+        tf_nohp.setText("");
+        tf_username.setText("");
+        pw_password.setText("");
+        cb_regas.setSelectedItem("");
+        cb_gender.setSelectedItem("");
+  
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null, e);
+    }}
     private void jButton_reg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_reg1ActionPerformed
-        // TODO add your handling code here:
+    String NISNNIP = tf_nisnnip.getText();
+    String email = tf_email.getText();
+    String alamat = tf_alamat.getText();
+    String nohp = tf_nohp.getText();
+    String username = tf_username.getText();
+    String password = pw_password.getText();
+    String regas = cb_regas.getSelectedItem().toString();
+    String gender = cb_gender.getSelectedItem().toString();
+    insertDataRegister(NISNNIP, email, alamat, nohp, username, password, regas, gender);
+
+    
+//    String sql = "INSERT INTO register (nisnnip, email, alamat, no_hp, username, password, reg_as, gender) VALUES (?,?,?,?,?,?,?,?)";
+    
+//    try{
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
+//        String sqlusername="db_LibraryManageBase";
+//        String sqlpassword = "1234";
+//        
+//        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
+//
+//        PreparedStatement pst = conn.prepareStatement(sql);
+//        pst.setString(1, nisnnip);
+//        pst.setString(2, email);
+//        pst.setString(3, alamat);
+//        pst.setString(4, no_hp);
+//        pst.setString(5, username);
+//        pst.setString(6, password);
+//        pst.setString(7, reg_as);
+//        pst.setString(8, gender);
+//        pst.execute();
+//        JOptionPane.showMessageDialog(null, "Anda berhasil melakukan register!");
+//        tf_nisnnip.setText("");
+//        tf_email.setText("");
+//        tf_alamat.setText("");
+//        tf_nohp.setText("");
+//        tf_username.setText("");
+//        pw_password.setText("");
+//        cb_regas.setSelectedItem("");
+//        cb_gender.setSelectedItem("");
+//  
+//    }catch(Exception e){
+//        JOptionPane.showMessageDialog(null, e);
+//    }
+    
+    
     }//GEN-LAST:event_jButton_reg1ActionPerformed
+
+    private void lbl_checkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_checkMouseExited
+    lbl_check.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    Font font = lbl_check.getFont();
+    Map attr = font.getAttributes();
+    attr.put(TextAttribute.UNDERLINE,-1);
+    lbl_check.setFont(font.deriveFont(attr));
+    }//GEN-LAST:event_lbl_checkMouseExited
+
+    private void lbl_checkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_checkMouseEntered
+    lbl_check.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    Font font = lbl_check.getFont();
+    Map attr = font.getAttributes();
+    attr.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+    lbl_check.setFont(font.deriveFont(attr));
+    
+            // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_checkMouseEntered
+
+    private void lbl_checkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_checkMouseClicked
+String username =tf_username.getText();
+    if(username.isEmpty()){
+        JOptionPane.showMessageDialog(null, "Please enter username");
+    }else{
+    }
+    try{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String sqlusername="db_LibraryManageBase";
+        String sqlpassword = "1234";
+        
+        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
+        String sql = "SELECT * FROM register WHERE username = '"+username+"";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        if(!rs.next()){
+            JOptionPane.showMessageDialog(null, "username is available");
+            pw_password.requestFocus();
+        }else{
+            JOptionPane.showMessageDialog(null, "username already exist");
+            tf_username.setText("");
+        }
+        
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null, e);
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_checkMouseClicked
+
+    private void tf_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_usernameActionPerformed
+
+    private void cb_genderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_genderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_genderActionPerformed
+
+    private void tf_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_emailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -359,10 +557,12 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_gender;
+    private javax.swing.JComboBox<String> cb_regas;
     private javax.swing.JButton jButton_reg1;
-    private javax.swing.JComboBox<String> jComboBox_as;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_password;
     private javax.swing.JLabel jLabel_password1;
     private javax.swing.JLabel jLabel_password2;
@@ -376,11 +576,12 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPasswordField jPasswordField_pw;
-    private javax.swing.JPasswordField jPasswordField_pw1;
-    private javax.swing.JPasswordField jPasswordField_pw2;
-    private javax.swing.JPasswordField jPasswordField_pw3;
-    private javax.swing.JPasswordField jPasswordField_pw4;
-    private javax.swing.JTextField jTextField_uname;
+    private javax.swing.JLabel lbl_check;
+    private javax.swing.JPasswordField pw_password;
+    private javax.swing.JTextField tf_alamat;
+    private javax.swing.JTextField tf_email;
+    private javax.swing.JTextField tf_nisnnip;
+    private javax.swing.JTextField tf_nohp;
+    private javax.swing.JTextField tf_username;
     // End of variables declaration//GEN-END:variables
 }
