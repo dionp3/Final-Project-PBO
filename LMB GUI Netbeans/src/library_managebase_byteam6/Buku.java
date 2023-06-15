@@ -9,12 +9,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import static Frames.Insertdata.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
 
 /**
  *
@@ -219,6 +221,7 @@ public class Buku extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tabel_buku);
+        tabel_buku.getAccessibleContext().setAccessibleName("");
 
         btn_add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_add.setForeground(new java.awt.Color(197, 137, 64));
@@ -314,39 +317,90 @@ public class Buku extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_idbukuActionPerformed
 
-    private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection ctrl = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_lib","root","ardhi@26");
-            Statement st = ctrl.createStatement();
-            String sql = "Select * from buku";
-            
-            ResultSet rs = st.executeQuery(sql);
-            java.sql.ResultSetMetaData rsmd = rs.getMetaData();
-            DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
-            
-            int cols = rsmd.getColumnCount();
-            String[] colName = new String[cols];
-            for(int i=0;i<cols;i++)
-                colName[i] = rsmd.getColumnName(i+1);
-            model.setColumnIdentifiers(colName);
-            String idBuku, judul, penulis, penerbit, stok;
-            while(rs.next()){
-                idBuku = rs.getString(1);
-                judul = rs.getString(2);
-                penulis = rs.getString(3);
-                penerbit= rs.getString(4);
-                stok = rs.getString(5);
-                String[] row = {idBuku, judul, penulis, penerbit,stok};
-                model.addRow(row);
-            
-               
-            }
-            st.close();
-            ctrl.close();
-        } catch(Exception e){
-                JOptionPane.showMessageDialog(this,e.getMessage());
+    public void showDatafromDB() {
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_lib", "root", "ardhi@26");
+        Statement statement = conn.createStatement();
+        String sql = "SELECT * FROM buku";
+
+        ResultSet rs = statement.executeQuery(sql);
+        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
+        int cols = rsmd.getColumnCount();
+
+        // Menghapus kolom yang ada pada tabel sebelumnya (jika ada)
+        model.setColumnCount(0);
+
+        // Menambahkan nama kolom ke model tabel
+        for (int i = 1; i <= cols; i++) {
+            model.addColumn(rsmd.getColumnName(i));
         }
+
+        // Menambahkan data ke model tabel
+        while (rs.next()) {
+            Object[] row = new Object[cols];
+            for (int i = 1; i <= cols; i++) {
+                row[i - 1] = rs.getObject(i);
+            }
+            model.addRow(row);
+        }
+
+        statement.close();
+        conn.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+
+    }
+    
+    public void show2 (DefaultTableModel model){
+         try {
+            // Mengganti dengan informasi koneksi database Anda
+            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+            String username = "root";
+            String password = "ardhi@26";
+
+            // Membuat koneksi ke database
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            // Membuat pernyataan SQL untuk mengambil data dari tabel
+            String sql = "SELECT * FROM buku";
+            Statement statement = conn.createStatement();
+
+            // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Mengambil metadata hasil query
+            ResultSetMetaData metaData = (ResultSetMetaData) resultSet.getMetaData();
+
+            // Mendapatkan jumlah kolom dalam hasil query
+            int columnCount = metaData.getColumnCount();
+
+            // Mengambil nama kolom dan menambahkannya ke model tabel
+            for (int column = 1; column <= columnCount; column++) {
+                model.addColumn(metaData.getColumnLabel(column));
+            }
+
+            // Mengambil data baris dari hasil query dan menambahkannya ke model tabel
+            while (resultSet.next()) {
+                Object[] row = new Object[columnCount];
+                for (int column = 1; column <= columnCount; column++) {
+                    row[column - 1] = resultSet.getObject(column);
+                }
+                model.addRow(row);
+            }
+
+            // Menutup koneksi dan pernyataan SQL
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
+        showDatafromDB();
     }//GEN-LAST:event_btn_showActionPerformed
 
     private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
@@ -403,8 +457,48 @@ public class Buku extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_logoutMouseClicked
 
+    public void insertDatatoDB(String idbuku, String judul, String penulis, String penerbit, int stok) {
+        try {
+           
+            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+            String username = "root";
+            String password = "ardhi@26";
+
+            
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            
+            String sql = "INSERT INTO buku (idbuku, judul, penulis, penerbit, stok) VALUES (?, ?, ? ,? ,?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, idbuku);
+            statement.setString(2, judul);
+            statement.setString(3, penulis);
+            statement.setString(4, penerbit);
+            statement.setInt(5, stok);
+
+            
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");
+                
+            }
+
+            
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+        }
+    }
+    
+    
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-       
+         String idbuku = tf_idbuku.getText();
+         String judul = tf_judul.getText();
+         String penulis = tf_penulis.getText();
+         String penerbit = tf_penerbit.getText();
+         int stok = (int) jspinner_stok.getValue();
+                insertDatatoDB(idbuku, judul, penulis, penerbit, stok);
     }//GEN-LAST:event_btn_addActionPerformed
 
     /**
@@ -441,9 +535,6 @@ public class Buku extends javax.swing.JFrame {
             }
         });
     }
-
-
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
