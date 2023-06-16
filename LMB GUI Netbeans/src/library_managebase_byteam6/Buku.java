@@ -232,6 +232,11 @@ public class Buku extends javax.swing.JFrame {
         btn_add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_add.setForeground(new java.awt.Color(197, 137, 64));
         btn_add.setText("Add");
+        btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addMouseClicked(evt);
+            }
+        });
         btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_addActionPerformed(evt);
@@ -510,6 +515,10 @@ public class Buku extends javax.swing.JFrame {
     private void jspinner_stokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jspinner_stokMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jspinner_stokMouseClicked
+
+    private void btn_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addMouseClicked
 
     /**
      * @param args the command line arguments

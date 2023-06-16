@@ -4,7 +4,17 @@
  */
 package library_managebase_byteam6;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -41,9 +51,7 @@ public class Peminjaman extends javax.swing.JFrame {
         tf_judul = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tf_tglpinjam = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        tf_tgltempo = new javax.swing.JTextField();
         btn_add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_peminjaman = new javax.swing.JTable();
@@ -51,6 +59,9 @@ public class Peminjaman extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         spinner_jmlh = new javax.swing.JSpinner();
+        date_pinjam = new com.toedter.calendar.JDateChooser();
+        date_tempo = new com.toedter.calendar.JDateChooser();
+        btn_show = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -178,6 +189,11 @@ public class Peminjaman extends javax.swing.JFrame {
         btn_add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_add.setForeground(new java.awt.Color(197, 137, 64));
         btn_add.setText("Add");
+        btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_addMouseClicked(evt);
+            }
+        });
         btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_addActionPerformed(evt);
@@ -205,6 +221,21 @@ public class Peminjaman extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(197, 137, 64));
         jLabel7.setText("Jumlah");
 
+        spinner_jmlh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spinner_jmlhMouseClicked(evt);
+            }
+        });
+
+        btn_show.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_show.setForeground(new java.awt.Color(197, 137, 64));
+        btn_show.setText("Show");
+        btn_show.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_showActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -223,15 +254,18 @@ public class Peminjaman extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tf_tgltempo, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tf_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel7)
+                                .addComponent(date_pinjam, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                                .addComponent(date_tempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(spinner_jmlh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btn_add))))
+                                .addComponent(btn_add)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_show))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -246,17 +280,17 @@ public class Peminjaman extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tf_idbuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_tglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date_pinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_judul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_tgltempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date_tempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -265,7 +299,8 @@ public class Peminjaman extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tf_peminjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spinner_jmlh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_add))
+                    .addComponent(btn_add)
+                    .addComponent(btn_show))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
@@ -292,9 +327,96 @@ public class Peminjaman extends javax.swing.JFrame {
     private void tf_idbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idbukuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_idbukuActionPerformed
+    public void showDatafromDB() {
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_member", "root", "mitrakukar123");
+        Statement statement = conn.createStatement();
+        String sql = "SELECT * FROM peminjaman";
 
+        ResultSet rs = statement.executeQuery(sql);
+        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        DefaultTableModel model = (DefaultTableModel) tabel_peminjaman.getModel();
+        int cols = rsmd.getColumnCount();
+
+        // Menghapus kolom yang ada pada tabel sebelumnya (jika ada)
+        model.setColumnCount(0);
+
+        // Menambahkan nama kolom ke model tabel
+        for (int i = 1; i <= cols; i++) {
+            model.addColumn(rsmd.getColumnName(i));
+        }
+
+        // Menambahkan data ke model tabel
+        while (rs.next()) {
+            Object[] row = new Object[cols];
+            for (int i = 1; i <= cols; i++) {
+                row[i - 1] = rs.getObject(i);
+            }
+            model.addRow(row);
+        }
+
+        statement.close();
+        conn.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+
+    }
+    
+    public void show2 (DefaultTableModel model){
+         try {
+            // Mengganti dengan informasi koneksi database Anda
+            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+            String username = "root";
+            String password = "mitrakukar123";
+
+            // Membuat koneksi ke database
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            // Membuat pernyataan SQL untuk mengambil data dari tabel
+            String sql = "SELECT * FROM peminjaman";
+            Statement statement = conn.createStatement();
+
+            // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Mengambil metadata hasil query
+            ResultSetMetaData metaData = (ResultSetMetaData) resultSet.getMetaData();
+
+            // Mendapatkan jumlah kolom dalam hasil query
+            int columnCount = metaData.getColumnCount();
+
+            // Mengambil nama kolom dan menambahkannya ke model tabel
+            for (int column = 1; column <= columnCount; column++) {
+                model.addColumn(metaData.getColumnLabel(column));
+            }
+
+            // Mengambil data baris dari hasil query dan menambahkannya ke model tabel
+            while (resultSet.next()) {
+                Object[] row = new Object[columnCount];
+                for (int column = 1; column <= columnCount; column++) {
+                    row[column - 1] = resultSet.getObject(column);
+                }
+                model.addRow(row);
+            }
+
+            // Menutup koneksi dan pernyataan SQL
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
+        String idbuku = tf_idbuku.getText();
+         String judul = tf_judul.getText();
+         String peminjaman = tf_peminjam.getText();
+         Date tanggalpinjam = date_pinjam.getDate();
+         Date tanggaltempo = date_tempo.getDate();
+         int jumlah = (int) spinner_jmlh.getValue();
+                insertDatatoDB(idbuku, judul, peminjaman, tanggalpinjam, tanggaltempo, jumlah);
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LogoutActionPerformed
@@ -305,7 +427,72 @@ public class Peminjaman extends javax.swing.JFrame {
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btn_LogoutActionPerformed
+    public void insertDatatoDB(String idbuku, String judul, String peminjaman, Date tanggalpinjam, Date tanggaltempo, int jumlah) {
+    try {
+        String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+        String username = "root";
+        String password = "mitrakukar123";
 
+        Connection conn = DriverManager.getConnection(url, username, password);
+
+        String sql = "INSERT INTO peminjaman (idbuku, judul, peminjaman, tanggalpinjam, tanggaltempo, jumlah) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, idbuku);
+        statement.setString(2, judul);
+        statement.setString(3, peminjaman);
+        statement.setDate(4, new java.sql.Date(tanggalpinjam.getTime()));
+        statement.setDate(5, new java.sql.Date(tanggaltempo.getTime()));
+        statement.setInt(6, jumlah);
+
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan ke dalam database!");
+        }
+
+        statement.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + ex.getMessage());
+    }
+}
+
+    
+    
+//    public void insertDatatoDB(String idbuku, String judul, String peminjam, Date tanggalpinjam, Date tanggaltempo, int jumlah) {
+//        try {
+//           
+//            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+//            String username = "root";
+//            String password = "mitrakukar123";
+//
+//            
+//            Connection conn = DriverManager.getConnection(url, username, password);
+//
+//            
+//            String sql = "INSERT INTO pengembalian (idbuku, judul, peminjaman, tanggalpinjam, tanggaltempo, jumlah) VALUES (?, ?, ? ,? ,?, ?)";
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1, idbuku);
+//            statement.setString(2, judul);
+//            statement.setString(3,peminjam);
+//            statement.setDate(4, (java.sql.Date) tanggalpinjam);
+//            statement.setDate(5, (java.sql.Date) tanggaltempo);
+//            statement.setInt(6, jumlah);
+//
+//            
+//            int rowsInserted = statement.executeUpdate();
+//            if (rowsInserted > 0) {
+//                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");
+//                
+//            }
+//
+//            
+//            statement.close();
+//            conn.close();
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+//        }
+//    }
+    
     private void jLabel_PengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_PengembalianMouseClicked
         Pengembalian pengembalian = new Pengembalian();
         pengembalian.setVisible(true);
@@ -332,6 +519,18 @@ public class Peminjaman extends javax.swing.JFrame {
         member.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel_MemberMouseClicked
+
+    private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
+        showDatafromDB();
+    }//GEN-LAST:event_btn_showActionPerformed
+
+    private void spinner_jmlhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spinner_jmlhMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spinner_jmlhMouseClicked
+
+    private void btn_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_addMouseClicked
 
     /**
      * @param args the command line arguments
@@ -374,6 +573,9 @@ public class Peminjaman extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Logout;
     private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_show;
+    private com.toedter.calendar.JDateChooser date_pinjam;
+    private com.toedter.calendar.JDateChooser date_tempo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -393,7 +595,5 @@ public class Peminjaman extends javax.swing.JFrame {
     private javax.swing.JTextField tf_idbuku;
     private javax.swing.JTextField tf_judul;
     private javax.swing.JTextField tf_peminjam;
-    private javax.swing.JTextField tf_tglpinjam;
-    private javax.swing.JTextField tf_tgltempo;
     // End of variables declaration//GEN-END:variables
 }
