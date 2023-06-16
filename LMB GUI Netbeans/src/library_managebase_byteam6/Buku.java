@@ -209,6 +209,12 @@ public class Buku extends javax.swing.JFrame {
             }
         });
 
+        jspinner_stok.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jspinner_stokMouseClicked(evt);
+            }
+        });
+
         tabel_buku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -500,6 +506,10 @@ public class Buku extends javax.swing.JFrame {
          int stok = (int) jspinner_stok.getValue();
                 insertDatatoDB(idbuku, judul, penulis, penerbit, stok);
     }//GEN-LAST:event_btn_addActionPerformed
+
+    private void jspinner_stokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jspinner_stokMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jspinner_stokMouseClicked
 
     /**
      * @param args the command line arguments

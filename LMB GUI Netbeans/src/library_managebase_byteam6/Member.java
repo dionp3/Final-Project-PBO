@@ -4,9 +4,12 @@
  */
 package library_managebase_byteam6;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -305,9 +308,99 @@ public class Member extends javax.swing.JFrame {
     private void tf_iduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_iduserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_iduserActionPerformed
+    
+    public void showDatafromDB() {
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_member", "root", "mitrakukar123");
+        Statement statement = conn.createStatement();
+        String sql = "SELECT * FROM member";
 
+        ResultSet rs = statement.executeQuery(sql);
+        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        DefaultTableModel model = (DefaultTableModel) tabel_member.getModel();
+        int cols = rsmd.getColumnCount();
+
+        // Menghapus kolom yang ada pada tabel sebelumnya (jika ada)
+        model.setColumnCount(0);
+
+        // Menambahkan nama kolom ke model tabel
+        for (int i = 1; i <= cols; i++) {
+            model.addColumn(rsmd.getColumnName(i));
+        }
+
+        // Menambahkan data ke model tabel
+        while (rs.next()) {
+            Object[] row = new Object[cols];
+            for (int i = 1; i <= cols; i++) {
+                row[i - 1] = rs.getObject(i);
+            }
+            model.addRow(row);
+        }
+
+        statement.close();
+        conn.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+    }
+
+
+    }
+    
+    public void show2 (DefaultTableModel model){
+         try {
+            // Mengganti dengan informasi koneksi database Anda
+            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+            String username = "root";
+            String password = "mitrakukar123";
+
+            // Membuat koneksi ke database
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            // Membuat pernyataan SQL untuk mengambil data dari tabel
+            String sql = "SELECT * FROM member";
+            Statement statement = conn.createStatement();
+
+            // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Mengambil metadata hasil query
+            ResultSetMetaData metaData = (ResultSetMetaData) resultSet.getMetaData();
+
+            // Mendapatkan jumlah kolom dalam hasil query
+            int columnCount = metaData.getColumnCount();
+
+            // Mengambil nama kolom dan menambahkannya ke model tabel
+            for (int column = 1; column <= columnCount; column++) {
+                model.addColumn(metaData.getColumnLabel(column));
+            }
+
+            // Mengambil data baris dari hasil query dan menambahkannya ke model tabel
+            while (resultSet.next()) {
+                Object[] row = new Object[columnCount];
+                for (int column = 1; column <= columnCount; column++) {
+                    row[column - 1] = resultSet.getObject(column);
+                }
+                model.addRow(row);
+            }
+
+            // Menutup koneksi dan pernyataan SQL
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
+        String idmember = tf_iduser.getText();
+        String nama = tf_nisnnip.getText();
+        String nisn = tf_nama.getText();
+        String nohp = tf_nohp.getText();
+        String alamat = tf_alamat.getText();
+               insertDatatoDB(idmember, nama, nisn, nohp, alamat);                        
+
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
@@ -318,7 +411,41 @@ public class Member extends javax.swing.JFrame {
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btn_logoutActionPerformed
+    
+    public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
+        try {
+           
+            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+            String username = "root";
+            String password = "mitrakukar123";
 
+            
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            
+            String sql = "INSERT INTO member (idmember, nama, nisn, nohp, alamat) VALUES (?, ?, ? ,? ,?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, idmember);
+            statement.setString(2, nama);
+            statement.setString(3, nisn);
+            statement.setString(4, nohp);
+            statement.setString(5, alamat);
+
+            
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");
+                
+            }
+
+            
+            statement.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+        }
+    }
+    
     private void jLabel_PengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_PengembalianMouseClicked
         Pengembalian pengembalian = new Pengembalian();
         pengembalian.setVisible(true);
@@ -354,37 +481,9 @@ public class Member extends javax.swing.JFrame {
         buku.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel_BukuMouseClicked
-
+    
     private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_lmb","root","1234");
-            Statement st = con.createStatement();
-            String sql = "Select * from member";
-            
-            ResultSet rs = st.executeQuery(sql);
-            java.sql.ResultSetMetaData rsmd = rs.getMetaData();
-            DefaultTableModel model = (DefaultTableModel) tabel_member.getModel();
-            
-            int cols =rsmd.getColumnCount();
-            String[] colName = new String[cols];
-            for(int i=0;i<cols;i++)
-                colName[i] = rsmd.getColumnName(i+1);
-            model.setColumnIdentifiers( colName);
-            String idMember, nama, nisn, nohp, alamat;
-            while(rs.next()){
-                idMember = rs.getString(1);
-                nama = rs.getString(2);
-                nisn = rs.getString(3);
-                nohp = rs.getString(4);
-                alamat = rs.getString(5);
-                String[] row = (idMember, nama, nisn, nohp, alamat);
-                model.addRow(row);
-            }
-            st.close();
-            con.close();
-        }catch(Exception e){
-                JOptionPane.showMessageDialog(this,e.getMessage());
+        showDatafromDB();
     }//GEN-LAST:event_btn_showActionPerformed
 
     /**

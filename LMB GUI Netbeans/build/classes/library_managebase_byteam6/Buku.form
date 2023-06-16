@@ -386,6 +386,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="jspinner_stok">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jspinner_stokMouseClicked"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
