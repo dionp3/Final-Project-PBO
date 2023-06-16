@@ -5,6 +5,10 @@
 package library_managebase_byteam6;
 
 import javax.swing.JFrame;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -30,7 +34,7 @@ public class Buku2 extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        tf_idbuku = new javax.swing.JTextField();
+        tf_judulbuku = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,10 +63,10 @@ public class Buku2 extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(250, 234, 177));
         jPanel2.setForeground(new java.awt.Color(250, 234, 177));
 
-        tf_idbuku.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        tf_idbuku.addActionListener(new java.awt.event.ActionListener() {
+        tf_judulbuku.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tf_judulbuku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_idbukuActionPerformed(evt);
+                tf_judulbukuActionPerformed(evt);
             }
         });
 
@@ -123,7 +127,7 @@ public class Buku2 extends javax.swing.JFrame {
                         .addComponent(btn_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(tf_idbuku, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tf_judulbuku, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_add))
                             .addComponent(jLabel6)
@@ -139,7 +143,7 @@ public class Buku2 extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_idbuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_judulbuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_add))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,12 +170,13 @@ public class Buku2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tf_idbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idbukuActionPerformed
+    private void tf_judulbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_judulbukuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_idbukuActionPerformed
+    }//GEN-LAST:event_tf_judulbukuActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        // TODO add your handling code here:
+        String keyword = tf_judulbuku.getText();
+        searchData(keyword);
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
@@ -182,7 +187,50 @@ public class Buku2 extends javax.swing.JFrame {
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btn_logoutActionPerformed
+    
+    public void searchData(String keyword) {
+    try {
+        // Mengganti dengan informasi koneksi database Anda
+        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+        String username = "root";
+        String password = "ardhi@26";
 
+        // Membuat koneksi ke database
+        Connection conn = DriverManager.getConnection(url, username, password);
+
+        // Menyiapkan pernyataan SQL untuk melakukan pencarian data dalam tabel
+        String sql = "SELECT * FROM buku WHERE judul LIKE ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, "%" + keyword + "%");
+
+        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+        ResultSet rs = statement.executeQuery();
+
+        // Menghapus data sebelumnya dari tabel
+        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
+        model.setRowCount(0);
+
+        // Menambahkan baris data ke dalam tabel
+        while (rs.next()) {
+            Object[] rowData = new Object[5];
+            rowData[0] = rs.getString("idbuku");
+            rowData[1] = rs.getString("judul");
+            rowData[2] = rs.getString("penulis");
+            rowData[3] = rs.getString("penerbit");
+            rowData[4] = rs.getInt("stok");
+            model.addRow(rowData);
+        }
+
+        // Menutup koneksi dan pernyataan SQL
+        rs.close();
+        statement.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+    }
+}
+
+    
     private void btn_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMouseClicked
         Login login = new Login();
         login.setVisible(true);
@@ -237,6 +285,6 @@ public class Buku2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabel_buku;
-    private javax.swing.JTextField tf_idbuku;
+    private javax.swing.JTextField tf_judulbuku;
     // End of variables declaration//GEN-END:variables
 }

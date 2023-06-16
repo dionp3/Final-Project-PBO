@@ -232,11 +232,6 @@ public class Buku extends javax.swing.JFrame {
         btn_add.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_add.setForeground(new java.awt.Color(197, 137, 64));
         btn_add.setText("Add");
-        btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_addMouseClicked(evt);
-            }
-        });
         btn_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_addActionPerformed(evt);
@@ -366,52 +361,52 @@ public class Buku extends javax.swing.JFrame {
 
     }
     
-    public void show2 (DefaultTableModel model){
-         try {
-            // Mengganti dengan informasi koneksi database Anda
-            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-            String username = "root";
-            String password = "ardhi@26";
 
-            // Membuat koneksi ke database
-            Connection conn = DriverManager.getConnection(url, username, password);
+   public void showDataInTable() {
+    try {
+        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+        String username = "root";
+        String password = "ardhi@26";
 
-            // Membuat pernyataan SQL untuk mengambil data dari tabel
-            String sql = "SELECT * FROM buku";
-            Statement statement = conn.createStatement();
+        
+        Connection conn = DriverManager.getConnection(url, username, password);
 
-            // Menjalankan pernyataan SQL dan mendapatkan hasilnya
-            ResultSet resultSet = statement.executeQuery(sql);
+        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
+        String sql = "SELECT * FROM buku";
+        PreparedStatement statement = conn.prepareStatement(sql);
 
-            // Mengambil metadata hasil query
-            ResultSetMetaData metaData = (ResultSetMetaData) resultSet.getMetaData();
+        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+        ResultSet rs = statement.executeQuery();
 
-            // Mendapatkan jumlah kolom dalam hasil query
-            int columnCount = metaData.getColumnCount();
+        // Mengambil metadata hasil query
+        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
 
-            // Mengambil nama kolom dan menambahkannya ke model tabel
-            for (int column = 1; column <= columnCount; column++) {
-                model.addColumn(metaData.getColumnLabel(column));
+        // Menghapus data sebelumnya dari tabel
+        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
+        model.setRowCount(0);
+
+        // Menambahkan baris data ke dalam tabel
+        while (rs.next()) {
+            Object[] rowData = new Object[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                rowData[i] = rs.getObject(i + 1);
             }
-
-            // Mengambil data baris dari hasil query dan menambahkannya ke model tabel
-            while (resultSet.next()) {
-                Object[] row = new Object[columnCount];
-                for (int column = 1; column <= columnCount; column++) {
-                    row[column - 1] = resultSet.getObject(column);
-                }
-                model.addRow(row);
-            }
-
-            // Menutup koneksi dan pernyataan SQL
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            model.addRow(rowData);
         }
+
+        // Menutup koneksi dan pernyataan SQL
+        rs.close();
+        statement.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
+}
+
+
     private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
-        showDatafromDB();
+        showDataInTable();
     }//GEN-LAST:event_btn_showActionPerformed
 
     private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
@@ -515,10 +510,6 @@ public class Buku extends javax.swing.JFrame {
     private void jspinner_stokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jspinner_stokMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jspinner_stokMouseClicked
-
-    private void btn_addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_addMouseClicked
 
     /**
      * @param args the command line arguments
