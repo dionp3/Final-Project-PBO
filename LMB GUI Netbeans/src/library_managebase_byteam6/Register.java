@@ -290,10 +290,9 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbl_check)
-                        .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_check)
+                    .addComponent(tf_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_password3))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -377,7 +376,7 @@ public class Register extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_jLabel_tologMouseClicked
-public void insertDataRegister(String NISNNIP, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
+public void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
 try{
         Class.forName("com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
@@ -386,9 +385,9 @@ try{
         
         Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
 
-        String sql = "INSERT INTO register (NISNNIP, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO register (nisnnip, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, NISNNIP);
+        pst.setString(1, nisnnip);
         pst.setString(2, email);
         pst.setString(3, alamat);
         pst.setString(4, nohp);
@@ -411,7 +410,7 @@ try{
         JOptionPane.showMessageDialog(null, e);
     }}
     private void jButton_reg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_reg1ActionPerformed
-    String NISNNIP = tf_nisnnip.getText();
+    String nisnnip = tf_nisnnip.getText();
     String email = tf_email.getText();
     String alamat = tf_alamat.getText();
     String nohp = tf_nohp.getText();
@@ -419,44 +418,7 @@ try{
     String password = pw_password.getText();
     String regas = cb_regas.getSelectedItem().toString();
     String gender = cb_gender.getSelectedItem().toString();
-    insertDataRegister(NISNNIP, email, alamat, nohp, username, password, regas, gender);
-
-    
-//    String sql = "INSERT INTO register (nisnnip, email, alamat, no_hp, username, password, reg_as, gender) VALUES (?,?,?,?,?,?,?,?)";
-    
-//    try{
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
-//        String sqlusername="db_LibraryManageBase";
-//        String sqlpassword = "1234";
-//        
-//        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
-//
-//        PreparedStatement pst = conn.prepareStatement(sql);
-//        pst.setString(1, nisnnip);
-//        pst.setString(2, email);
-//        pst.setString(3, alamat);
-//        pst.setString(4, no_hp);
-//        pst.setString(5, username);
-//        pst.setString(6, password);
-//        pst.setString(7, reg_as);
-//        pst.setString(8, gender);
-//        pst.execute();
-//        JOptionPane.showMessageDialog(null, "Anda berhasil melakukan register!");
-//        tf_nisnnip.setText("");
-//        tf_email.setText("");
-//        tf_alamat.setText("");
-//        tf_nohp.setText("");
-//        tf_username.setText("");
-//        pw_password.setText("");
-//        cb_regas.setSelectedItem("");
-//        cb_gender.setSelectedItem("");
-//  
-//    }catch(Exception e){
-//        JOptionPane.showMessageDialog(null, e);
-//    }
-    
-    
+    insertDataRegister(nisnnip, email, alamat, nohp, username, password, regas, gender);
     }//GEN-LAST:event_jButton_reg1ActionPerformed
 
     private void lbl_checkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_checkMouseExited
@@ -494,6 +456,7 @@ String username =tf_username.getText();
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         if(!rs.next()){
+            new Login().setVisible(true);
             JOptionPane.showMessageDialog(null, "username is available");
             pw_password.requestFocus();
         }else{

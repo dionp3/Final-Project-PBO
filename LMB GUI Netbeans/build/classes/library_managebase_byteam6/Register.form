@@ -186,12 +186,10 @@
                           <Component id="cb_gender" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl_check" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tf_username" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel_password3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_check" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tf_username" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_password3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">

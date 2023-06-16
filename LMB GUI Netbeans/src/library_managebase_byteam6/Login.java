@@ -4,12 +4,15 @@
  */
 package library_managebase_byteam6;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -246,26 +249,35 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_toregMouseClicked
 
     private void jButton_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_loginActionPerformed
-        String Username = jTextField_uname.getText();
-        String Password = jPasswordField_pw.getText(); 
-        
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_lmb","root","1234");
-            Statement st = con.createStatement();
-            String sql = "Select * from user";
-            
-            ResultSet rs = st.executeQuery(sql);
+    String username = jTextField_uname.getText();
+    String password = jPasswordField_pw.getText();
+    String regas = cb_login.getSelectedItem().toString();
 
-            if(Username.equals(Username) && Password.equals(Password)){
-                new Member().setVisible(true);
-                JOptionPane.showMessageDialog(null, "Login Berhasil ");
-            }else{
-                JOptionPane.showMessageDialog(null,"Login Gagal");
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_librarymanagebase", "root", "1234");
+        String sql = "SELECT * FROM register WHERE username = ? AND password = ? AND regas = ?";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setString(1, username);
+        statement.setString(2, password);
+        statement.setString(3, regas);
+
+        ResultSet rs = statement.executeQuery();
+
+        if (rs.next()) {
+            if (regas.equals("Admin")) {
+                new Buku().setVisible(true);
+            }else if (regas.equals("Siswa/Guru")) {
+                new Buku2().setVisible(true); 
             }
-        }catch(Exception e){
-                JOptionPane.showMessageDialog(this,e.getMessage());
+            JOptionPane.showMessageDialog(null, "Login Berhasil");
+        } else {
+            JOptionPane.showMessageDialog(null, "Login Gagal");
         }
+        con.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, e.getMessage());
+         }
     }//GEN-LAST:event_jButton_loginActionPerformed
 
     /**
