@@ -311,86 +311,49 @@ public class Member extends javax.swing.JFrame {
     
     public void showDatafromDB() {
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_member", "root", "mitrakukar123");
-        Statement statement = conn.createStatement();
+        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+        String username = "root";
+        String password = "ardhi@26";
+
+        
+        Connection conn = DriverManager.getConnection(url, username, password);
+
+        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
         String sql = "SELECT * FROM member";
+        PreparedStatement statement = conn.prepareStatement(sql);
 
-        ResultSet rs = statement.executeQuery(sql);
+        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+        ResultSet rs = statement.executeQuery();
+
+        // Mengambil metadata hasil query
         ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+
+        // Menghapus data sebelumnya dari tabel
         DefaultTableModel model = (DefaultTableModel) tabel_member.getModel();
-        int cols = rsmd.getColumnCount();
+        model.setRowCount(0);
 
-        // Menghapus kolom yang ada pada tabel sebelumnya (jika ada)
-        model.setColumnCount(0);
-
-        // Menambahkan nama kolom ke model tabel
-        for (int i = 1; i <= cols; i++) {
-            model.addColumn(rsmd.getColumnName(i));
-        }
-
-        // Menambahkan data ke model tabel
+        // Menambahkan baris data ke dalam tabel
         while (rs.next()) {
-            Object[] row = new Object[cols];
-            for (int i = 1; i <= cols; i++) {
-                row[i - 1] = rs.getObject(i);
+            Object[] rowData = new Object[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                rowData[i] = rs.getObject(i + 1);
             }
-            model.addRow(row);
+            model.addRow(rowData);
         }
 
+        // Menutup koneksi dan pernyataan SQL
+        rs.close();
         statement.close();
         conn.close();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e.getMessage());
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
 
 
     }
     
-    public void show2 (DefaultTableModel model){
-         try {
-            // Mengganti dengan informasi koneksi database Anda
-            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
-            String username = "root";
-            String password = "mitrakukar123";
-
-            // Membuat koneksi ke database
-            Connection conn = DriverManager.getConnection(url, username, password);
-
-            // Membuat pernyataan SQL untuk mengambil data dari tabel
-            String sql = "SELECT * FROM member";
-            Statement statement = conn.createStatement();
-
-            // Menjalankan pernyataan SQL dan mendapatkan hasilnya
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            // Mengambil metadata hasil query
-            ResultSetMetaData metaData = (ResultSetMetaData) resultSet.getMetaData();
-
-            // Mendapatkan jumlah kolom dalam hasil query
-            int columnCount = metaData.getColumnCount();
-
-            // Mengambil nama kolom dan menambahkannya ke model tabel
-            for (int column = 1; column <= columnCount; column++) {
-                model.addColumn(metaData.getColumnLabel(column));
-            }
-
-            // Mengambil data baris dari hasil query dan menambahkannya ke model tabel
-            while (resultSet.next()) {
-                Object[] row = new Object[columnCount];
-                for (int column = 1; column <= columnCount; column++) {
-                    row[column - 1] = resultSet.getObject(column);
-                }
-                model.addRow(row);
-            }
-
-            // Menutup koneksi dan pernyataan SQL
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    
     
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
@@ -415,9 +378,9 @@ public class Member extends javax.swing.JFrame {
     public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
         try {
            
-            String url = "jdbc:mysql://127.0.0.1:3306/db_member";
+            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
             String username = "root";
-            String password = "mitrakukar123";
+            String password = "ardhi@26";
 
             
             Connection conn = DriverManager.getConnection(url, username, password);

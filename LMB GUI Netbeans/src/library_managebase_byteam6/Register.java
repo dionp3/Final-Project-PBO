@@ -379,9 +379,9 @@ public class Register extends javax.swing.JFrame {
 public void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
 try{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
-        String sqlusername="db_LibraryManageBase";
-        String sqlpassword = "1234";
+        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
+        String sqlusername="root";
+        String sqlpassword = "ardhi@26";
         
         Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
 
@@ -447,9 +447,9 @@ String username =tf_username.getText();
     }
     try{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://localhost:3306/db_librarymanagebase?zeroDateTimeBehavior=CONVERT_TO_NULL";
-        String sqlusername="db_LibraryManageBase";
-        String sqlpassword = "1234";
+        String url = "jdbc:mysql://127.0.0.1:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String sqlusername="root";
+        String sqlpassword = "ardhi@26";
         
         Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
         String sql = "SELECT * FROM register WHERE username = '"+username+"";
