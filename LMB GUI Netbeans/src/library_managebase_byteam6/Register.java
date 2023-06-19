@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * @author USER
  */
 public class Register extends javax.swing.JFrame {
-
+//Connection conn = Connector_db.getConnection();
     /**
      * Creates new form Login
      */
@@ -384,7 +384,7 @@ try{
         String sqlpassword = "ardhi@26";
         
         Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
-
+//        Statement statement = conn.createStatement();
         String sql = "INSERT INTO register (nisnnip, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, nisnnip);
@@ -452,7 +452,8 @@ String username =tf_username.getText();
         String sqlpassword = "ardhi@26";
         
         Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
-        String sql = "SELECT * FROM register WHERE username = '"+username+"";
+//        Statement statement = conn.createStatement(); //ini yg ditambah
+        String sql = "SELECT * FROM register WHERE username = '"+username+"'";
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         if(!rs.next()){
