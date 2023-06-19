@@ -255,7 +255,7 @@ public class Login extends javax.swing.JFrame {
 
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_librarymanagebase", "root", "1234");
+        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_lib", "root", "ardhi@26");
         String sql = "SELECT * FROM register WHERE username = ? AND password = ? AND regas = ?";
         PreparedStatement statement = con.prepareStatement(sql);
         statement.setString(1, username);

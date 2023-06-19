@@ -93,7 +93,15 @@ public class Buku2 extends javax.swing.JFrame {
             new String [] {
                 "Id Buku", "Judul", "Penulis", "Penerbit", "Stok"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabel_buku);
 
         btn_logout.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N

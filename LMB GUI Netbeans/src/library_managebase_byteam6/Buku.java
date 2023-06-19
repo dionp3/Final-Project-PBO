@@ -225,7 +225,15 @@ public class Buku extends javax.swing.JFrame {
             new String [] {
                 "Id Buku", "Judul", "Penulis", "Penerbit", "Stok"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabel_buku);
         tabel_buku.getAccessibleContext().setAccessibleName("");
 
