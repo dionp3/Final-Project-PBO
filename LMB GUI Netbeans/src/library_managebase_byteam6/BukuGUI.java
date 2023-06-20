@@ -147,7 +147,9 @@ Buku buku = new Buku("idbuku", "judul", "penulis", "penerbit", 10);
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel_Pengembalian, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel_Peminjaman)
-                        .addComponent(btn_logout, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(btn_logout))))
                 .addGap(27, 27, 27))
         );
         jPanel4Layout.setVerticalGroup(
@@ -163,7 +165,7 @@ Buku buku = new Buku("idbuku", "judul", "penulis", "penerbit", 10);
                 .addComponent(jLabel_Pengembalian)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_logout)
-                .addGap(54, 54, 54))
+                .addGap(47, 47, 47))
         );
 
         tf_idbuku.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));

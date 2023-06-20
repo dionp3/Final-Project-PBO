@@ -182,7 +182,9 @@ public class PengembalianGUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel_Pengembalian, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel_Peminjaman)
-                        .addComponent(btn_logout, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(9, 9, 9)
+                            .addComponent(btn_logout))))
                 .addGap(27, 27, 27))
         );
         jPanel4Layout.setVerticalGroup(
@@ -198,7 +200,7 @@ public class PengembalianGUI extends javax.swing.JFrame {
                 .addComponent(jLabel_Pengembalian)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_logout)
-                .addGap(54, 54, 54))
+                .addGap(36, 36, 36))
         );
 
         btn_update1.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
