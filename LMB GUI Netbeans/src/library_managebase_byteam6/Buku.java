@@ -20,7 +20,7 @@ import java.sql.*;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Buku extends javax.swing.JFrame {
 
@@ -333,8 +333,7 @@ public class Buku extends javax.swing.JFrame {
 
     public void showDatafromDB() {
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_lib", "root", "ardhi@26");
+        Connection conn = Connector_db.getConnection();
         Statement statement = conn.createStatement();
         String sql = "SELECT * FROM buku";
 
@@ -365,19 +364,12 @@ public class Buku extends javax.swing.JFrame {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
-
-
-    }
+}
     
 
    public void showDataInTable() {
     try {
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        
-        Connection conn = DriverManager.getConnection(url, username, password);
+        Connection conn = Connector_db.getConnection();
 
         // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
         String sql = "SELECT * FROM buku";
@@ -411,8 +403,6 @@ public class Buku extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
 }
-
-
     private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
         showDataInTable();
     }//GEN-LAST:event_btn_showActionPerformed
@@ -473,14 +463,7 @@ public class Buku extends javax.swing.JFrame {
 
     public void insertDatatoDB(String idbuku, String judul, String penulis, String penerbit, int stok) {
         try {
-           
-            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-            String username = "root";
-            String password = "ardhi@26";
-
-            
-            Connection conn = DriverManager.getConnection(url, username, password);
-
+            Connection conn = Connector_db.getConnection();
             
             String sql = "INSERT INTO buku (idbuku, judul, penulis, penerbit, stok) VALUES (?, ?, ? ,? ,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -497,15 +480,12 @@ public class Buku extends javax.swing.JFrame {
                 
             }
 
-            
             statement.close();
             conn.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
         }
     }
-    
-    
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
          String idbuku = tf_idbuku.getText();
          String judul = tf_judul.getText();
@@ -553,8 +533,6 @@ public class Buku extends javax.swing.JFrame {
             }
         });
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_logout;

@@ -401,11 +401,11 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="4">
-                    <Column editable="true" title="Id Buku" type="java.lang.Object"/>
-                    <Column editable="true" title="Judul" type="java.lang.Object"/>
-                    <Column editable="true" title="Penulis" type="java.lang.Object"/>
-                    <Column editable="true" title="Penerbit" type="java.lang.Object"/>
-                    <Column editable="true" title="Stok" type="java.lang.Object"/>
+                    <Column editable="false" title="Id Buku" type="java.lang.Object"/>
+                    <Column editable="false" title="Judul" type="java.lang.Object"/>
+                    <Column editable="false" title="Penulis" type="java.lang.Object"/>
+                    <Column editable="false" title="Penerbit" type="java.lang.Object"/>
+                    <Column editable="false" title="Stok" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -458,7 +458,6 @@
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_addMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_addActionPerformed"/>
           </Events>
         </Component>

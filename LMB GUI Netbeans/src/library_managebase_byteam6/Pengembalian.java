@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Pengembalian extends javax.swing.JFrame {
 
@@ -287,14 +287,7 @@ public class Pengembalian extends javax.swing.JFrame {
     
     public void kembaliBuku(String idBuku, String peminjaman,  Date tanggalkembali, int jumlah) {
     try {
-        // Mengganti dengan informasi koneksi database Anda
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        // Membuat koneksi ke database
-        Connection conn = DriverManager.getConnection(url, username, password);
-
+        Connection conn = Connector_db.getConnection();
         // Mengecek stok buku yang tersedia
         String checkStokQuery = "SELECT * FROM buku WHERE idbuku = ?";
         PreparedStatement checkStokStatement = conn.prepareStatement(checkStokQuery);
@@ -330,10 +323,7 @@ public class Pengembalian extends javax.swing.JFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
-}
-
-
-   
+} 
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
        String idbuku = tf_idbuku.getText();
        int jumlah = (int) spinner_jmlh.getValue();
@@ -392,14 +382,7 @@ public class Pengembalian extends javax.swing.JFrame {
     
     public void kembalikanBuku(String idBuku, int jumlah) {
     try {
-        // Mengganti dengan informasi koneksi database Anda
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        // Membuat koneksi ke database
-        Connection conn = DriverManager.getConnection(url, username, password);
-
+        Connection conn = Connector_db.getConnection();
         // Mengecek stok buku yang tersedia
         String checkStokQuery = "SELECT * FROM buku WHERE idbuku = ?";
         PreparedStatement checkStokStatement = conn.prepareStatement(checkStokQuery);
@@ -436,13 +419,8 @@ public class Pengembalian extends javax.swing.JFrame {
 
     public void showDatafromDB() {
     try {
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
+        Connection conn = Connector_db.getConnection();
         
-        Connection conn = DriverManager.getConnection(url, username, password);
-
         // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
         String sql = "SELECT * FROM peminjaman";
         PreparedStatement statement = conn.prepareStatement(sql);

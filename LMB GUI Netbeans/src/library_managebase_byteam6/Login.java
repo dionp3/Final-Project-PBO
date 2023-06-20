@@ -16,7 +16,7 @@ import javax.swing.JComboBox;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Login extends javax.swing.JFrame {
 
@@ -254,10 +254,9 @@ public class Login extends javax.swing.JFrame {
     String regas = cb_login.getSelectedItem().toString();
 
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/db_lib", "root", "ardhi@26");
+        Connection conn = Connector_db.getConnection();
         String sql = "SELECT * FROM register WHERE username = ? AND password = ? AND regas = ?";
-        PreparedStatement statement = con.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, username);
         statement.setString(2, password);
         statement.setString(3, regas);
@@ -274,7 +273,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Login Gagal");
         }
-        con.close();
+        conn.close();
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
          }

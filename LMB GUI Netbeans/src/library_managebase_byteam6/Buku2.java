@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Buku2 extends javax.swing.JFrame {
 
@@ -199,12 +199,7 @@ public class Buku2 extends javax.swing.JFrame {
     public void searchData(String keyword) {
     try {
         // Mengganti dengan informasi koneksi database Anda
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        // Membuat koneksi ke database
-        Connection conn = DriverManager.getConnection(url, username, password);
+        Connection conn = Connector_db.getConnection();
 
         // Menyiapkan pernyataan SQL untuk melakukan pencarian data dalam tabel
         String sql = "SELECT * FROM buku WHERE judul LIKE ?";
@@ -237,8 +232,6 @@ public class Buku2 extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
 }
-
-    
     private void btn_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_logoutMouseClicked
         Login login = new Login();
         login.setVisible(true);

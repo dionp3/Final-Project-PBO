@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Peminjaman extends javax.swing.JFrame {
 
@@ -317,13 +317,7 @@ public class Peminjaman extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_idbukuActionPerformed
     public void showDatafromDB() {
     try {
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        
-        Connection conn = DriverManager.getConnection(url, username, password);
-
+        Connection conn = Connector_db.getConnection();
         // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
         String sql = "SELECT * FROM buku";
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -360,13 +354,7 @@ public class Peminjaman extends javax.swing.JFrame {
     }
     public void pinjamBuku(String idBuku, String peminjaman, Date tanggalpinjam, Date tanggaltempo, int jumlah) {
     try {
-        // Mengganti dengan informasi koneksi database Anda
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        // Membuat koneksi ke database
-        Connection conn = DriverManager.getConnection(url, username, password);
+        Connection conn = Connector_db.getConnection();
 
         // Mengecek stok buku yang tersedia
         String checkStokQuery = "SELECT * FROM buku WHERE idbuku = ?";
@@ -408,10 +396,7 @@ public class Peminjaman extends javax.swing.JFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
-}
-
-
-    
+}  
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
          String idbuku = tf_idbuku.getText();
          String peminjaman = tf_peminjam.getText();
@@ -429,10 +414,7 @@ public class Peminjaman extends javax.swing.JFrame {
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btn_LogoutActionPerformed
-    
 
-    
-    
     private void jLabel_PengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_PengembalianMouseClicked
         Pengembalian pengembalian = new Pengembalian();
         pengembalian.setVisible(true);

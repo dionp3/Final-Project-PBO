@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Member extends javax.swing.JFrame {
 
@@ -311,12 +311,7 @@ public class Member extends javax.swing.JFrame {
     
     public void showDatafromDB() {
     try {
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String username = "root";
-        String password = "ardhi@26";
-
-        
-        Connection conn = DriverManager.getConnection(url, username, password);
+        Connection conn = Connector_db.getConnection();
 
         // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
         String sql = "SELECT * FROM member";
@@ -349,12 +344,7 @@ public class Member extends javax.swing.JFrame {
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
     }
-
-
-    }
-    
-    
-    
+} 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
         String idmember = tf_iduser.getText();
@@ -377,14 +367,7 @@ public class Member extends javax.swing.JFrame {
     
     public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
         try {
-           
-            String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-            String username = "root";
-            String password = "ardhi@26";
-
-            
-            Connection conn = DriverManager.getConnection(url, username, password);
-
+            Connection conn = Connector_db.getConnection();
             
             String sql = "INSERT INTO member (idmember, nama, nisn, nohp, alamat) VALUES (?, ?, ? ,? ,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -394,14 +377,10 @@ public class Member extends javax.swing.JFrame {
             statement.setString(4, nohp);
             statement.setString(5, alamat);
 
-            
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");
-                
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");     
             }
-
-            
             statement.close();
             conn.close();
         } catch (SQLException ex) {

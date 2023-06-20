@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author USER
+ * @author Team 6
  */
 public class Register extends javax.swing.JFrame {
 
@@ -378,13 +378,8 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_tologMouseClicked
 public void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
 try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String sqlusername="root";
-        String sqlpassword = "ardhi@26";
+        Connection conn = Connector_db.getConnection();
         
-        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
-
         String sql = "INSERT INTO register (nisnnip, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, nisnnip);
@@ -446,12 +441,7 @@ String username =tf_username.getText();
     }else{
     }
     try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String url = "jdbc:mysql://127.0.0.1:3306/db_lib";
-        String sqlusername="root";
-        String sqlpassword = "ardhi@26";
-        
-        Connection conn = DriverManager.getConnection(url, sqlusername, sqlpassword);
+        Connection conn = Connector_db.getConnection();
         String sql = "SELECT * FROM register WHERE username = '"+username+"'";
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
