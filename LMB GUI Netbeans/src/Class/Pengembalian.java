@@ -10,38 +10,20 @@ import java.util.Date;
  *
  * @author Team 6
  */
-public class Pengembalian extends Buku {
-    protected String peminjam;
-    protected Date tanggalpinjam;
-    protected Date tanggaltempo;
+public class Pengembalian extends Peminjaman {
+    protected String idbuku;
     protected int jumlah;
     
-    public Pengembalian(String idbuku, String judul, String penulis,String penerbit, int stok) {
-        super("idbuku", "judul", "penulis", "penerbit", 0);
+    public Pengembalian(String peminjam, Date tanggalPinjam, Date tanggalTempo) {
+        super(peminjam, tanggalPinjam, tanggalTempo);
     }
     
-    public String getPeminjam() {
-        return this.peminjam;
+    public String getIdbuku() {
+        return this.idbuku;
     }
     
-    public void setPeminjam(String peminjam){
-        this.peminjam = peminjam;
-    }
-    
-    public Date getTanggalpinjam() {
-        return this.tanggalpinjam;
-    }
-    
-    public void setTanggalpeminjam(Date tanggalpinjam){
-        this.tanggalpinjam = tanggalpinjam;
-    }
-    
-    public Date getTanggaltempo() {
-        return this.tanggaltempo;
-    }
-    
-    public void setTanggaltempo(Date tanggaltempo){
-        this.tanggaltempo = tanggaltempo;
+    public void setIdbuku(String idbuku){
+        this.idbuku = idbuku;
     }
     
     public int getJumlah() {
@@ -51,6 +33,5 @@ public class Pengembalian extends Buku {
     public void setJumlah(int jumlah) {
         this.jumlah = jumlah;
     }
-    
     
 }
