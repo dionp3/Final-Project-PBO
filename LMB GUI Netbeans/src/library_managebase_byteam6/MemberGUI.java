@@ -4,6 +4,7 @@
  */
 package library_managebase_byteam6;
 
+import Class.Member;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Team 6
  */
 public class MemberGUI extends javax.swing.JFrame {
-
+Member member = new Member("id user", "nama", "nisn", "nohp", "alamat");
     /**
      * Creates new form Buku
      */
@@ -352,7 +353,7 @@ public class MemberGUI extends javax.swing.JFrame {
         String nisn = tf_nama.getText();
         String nohp = tf_nohp.getText();
         String alamat = tf_alamat.getText();
-               insertDatatoDB(idmember, nama, nisn, nohp, alamat);                        
+        member.insertDatatoDB(idmember, nama, nisn, nohp, alamat);                        
 
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -365,28 +366,28 @@ public class MemberGUI extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btn_logoutActionPerformed
     
-    public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
-        try {
-            Connection conn = Connector_db.getConnection();
-            
-            String sql = "INSERT INTO member (idmember, nama, nisn, nohp, alamat) VALUES (?, ?, ? ,? ,?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, idmember);
-            statement.setString(2, nama);
-            statement.setString(3, nisn);
-            statement.setString(4, nohp);
-            statement.setString(5, alamat);
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");     
-            }
-            statement.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-        }
-    }
+//    public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
+//        try {
+//            Connection conn = Connector_db.getConnection();
+//            
+//            String sql = "INSERT INTO member (idmember, nama, nisn, nohp, alamat) VALUES (?, ?, ? ,? ,?)";
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1, idmember);
+//            statement.setString(2, nama);
+//            statement.setString(3, nisn);
+//            statement.setString(4, nohp);
+//            statement.setString(5, alamat);
+//
+//            int rowsInserted = statement.executeUpdate();
+//            if (rowsInserted > 0) {
+//                JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke dalam database!");     
+//            }
+//            statement.close();
+//            conn.close();
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+//        }
+//    }
     
     private void jLabel_PengembalianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_PengembalianMouseClicked
         PengembalianGUI pengembalian = new PengembalianGUI();
