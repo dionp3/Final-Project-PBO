@@ -4,24 +4,27 @@
  */
 package library_managebase_byteam6;
 
+import Class.SiswaGuru;
+import Class.Admin;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Map;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author Team 6
  */
 public class RegisterGUI extends javax.swing.JFrame {
-
+    SiswaGuru siswa = new SiswaGuru("1222", "Email","Alamat", "No hp", "Gender", "Username", "Password", "Nisn");
     /**
      * Creates new form Login
      */
@@ -364,7 +367,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cb_regasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_regasActionPerformed
-
+        
     }//GEN-LAST:event_cb_regasActionPerformed
 
     private void jLabel_tologMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_tologMouseClicked
@@ -376,44 +379,9 @@ public class RegisterGUI extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_jLabel_tologMouseClicked
-public void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
-try{
-        Connection conn = Connector_db.getConnection();
-        
-        String sql = "INSERT INTO register (nisnnip, email, alamat, nohp, username, password, regas, gender) VALUES (?,?,?,?,?,?,?,?)";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, nisnnip);
-        pst.setString(2, email);
-        pst.setString(3, alamat);
-        pst.setString(4, nohp);
-        pst.setString(5, username);
-        pst.setString(6, password);
-        pst.setString(7, regas);
-        pst.setString(8, gender);
-        pst.execute();
-        JOptionPane.showMessageDialog(null, "Anda berhasil melakukan register!");
-        tf_nisnnip.setText("");
-        tf_email.setText("");
-        tf_alamat.setText("");
-        tf_nohp.setText("");
-        tf_username.setText("");
-        pw_password.setText("");
-        cb_regas.setSelectedItem("");
-        cb_gender.setSelectedItem("");
-  
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(null, e);
-    }}
+
     private void jButton_reg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_reg1ActionPerformed
-    String nisnnip = tf_nisnnip.getText();
-    String email = tf_email.getText();
-    String alamat = tf_alamat.getText();
-    String nohp = tf_nohp.getText();
-    String username = tf_username.getText();
-    String password = pw_password.getText();
-    String regas = cb_regas.getSelectedItem().toString();
-    String gender = cb_gender.getSelectedItem().toString();
-    insertDataRegister(nisnnip, email, alamat, nohp, username, password, regas, gender);
+    siswa.insertDataRegister(tf_nisnnip, tf_email, tf_alamat, tf_nohp, tf_username, tf_alamat, cb_regas, cb_gender);
     }//GEN-LAST:event_jButton_reg1ActionPerformed
 
     private void lbl_checkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_checkMouseExited
@@ -541,4 +509,12 @@ String username =tf_username.getText();
     private javax.swing.JTextField tf_nohp;
     private javax.swing.JTextField tf_username;
     // End of variables declaration//GEN-END:variables
+
+    private void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void insertDataRegister(String nisnnip, String email, String alamat, String nohp, String username, String password, String regas, String gender, JTextField tf_nisnnip, JTextField tf_email, JTextField tf_alamat, JTextField tf_nohp, JTextField tf_username, JPasswordField pw_password, JComboBox<String> cb_regas, JComboBox<String> cb_gender) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
