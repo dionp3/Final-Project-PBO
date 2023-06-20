@@ -69,26 +69,6 @@ public class Member {
         this.alamat = alamat;
     }
     
-    // Tambah member
-    public void tambahMember(String iduser, String nama, String nisn, String nohp, String alamat) {
-        this.iduser = iduser;
-        this.nama = nama;
-        this.nisn = nisn;
-        this.nohp = nohp;
-        this.alamat = alamat;
-        System.out.println("Berhasil menambahkan member");
-    }
-
-    // Show buku
-    public void showBuku(String iduser, String nama, String nisn, String nohp, String alamat) {
-        this.iduser = iduser;
-        this.nama = nama;
-        this.nisn = nisn;
-        this.nohp = nohp;
-        this.alamat = alamat;
-        System.out.println("Berhasil menampilkan alamat");
-    }
-    
     public void insertDatatoDB(String idmember, String nama, String nisn, String nohp, String alamat) {
         try {
             Connection conn = Connector_db.getConnection();

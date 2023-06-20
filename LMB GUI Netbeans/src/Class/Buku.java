@@ -60,27 +60,7 @@ public class Buku {
     public void setStok(int stok) {
         this.stok = stok;
     }
-
-    // Tambah buku
-    public void tambahBuku(String idbuku, String judul, String penulis, String penerbit, int stok) {
-        this.idbuku = idbuku;
-        this.judul = judul;
-        this.penulis = penulis;
-        this.penerbit = penerbit;
-        this.stok = stok;
-        System.out.println("Berhasil menambahkan buku");
-    }
-
-    // Show buku
-    public void showBuku(String idbuku, String judul, String penulis, String penerbit, int stok) {
-        this.idbuku = idbuku;
-        this.judul = judul;
-        this.penulis = penulis;
-        this.penerbit = penerbit;
-        this.stok = stok;
-        System.out.println("Berhasil menampilkan buku");
-    }
-
+    
     public void insertDatatoDB(String idbuku, String judul, String penulis, String penerbit, int stok) {
         try {
             Connection conn = Connector_db.getConnection();

@@ -319,43 +319,7 @@ public class PeminjamanGUI extends javax.swing.JFrame {
     private void tf_idbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idbukuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_idbukuActionPerformed
-//    public void showDatafromDB() {
-//    try {
-//        Connection conn = Connector_db.getConnection();
-//        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
-//        String sql = "SELECT * FROM buku";
-//        PreparedStatement statement = conn.prepareStatement(sql);
-//
-//        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
-//        ResultSet rs = statement.executeQuery();
-//
-//        // Mengambil metadata hasil query
-//        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
-//        int columnCount = rsmd.getColumnCount();
-//
-//        // Menghapus data sebelumnya dari tabel
-//        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
-//        model.setRowCount(0);
-//
-//        // Menambahkan baris data ke dalam tabel
-//        while (rs.next()) {
-//            Object[] rowData = new Object[columnCount];
-//            for (int i = 0; i < columnCount; i++) {
-//                rowData[i] = rs.getObject(i + 1);
-//            }
-//            model.addRow(rowData);
-//        }
-//
-//        // Menutup koneksi dan pernyataan SQL
-//        rs.close();
-//        statement.close();
-//        conn.close();
-//    } catch (SQLException ex) {
-//        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-//    }
-//
-//
-//    }
+
     public void pinjamBuku(String idBuku, String peminjaman, Date tanggalpinjam, Date tanggaltempo, int jumlah) {
     try {
         Connection conn = Connector_db.getConnection();

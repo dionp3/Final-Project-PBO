@@ -18,53 +18,7 @@ public class Peminjaman extends Buku {
     public Peminjaman(String idbuku, String judul, String penulis, String penerbit, int stok) {
         super(idbuku, judul, penulis, penerbit, stok);
     }
-
-//    public void addPeminjaman(String idBuku, String peminjam, Date tanggalPinjam, Date tanggalTempo, int jumlah) {
-//        try {
-//            Connection conn = Connector_db.getConnection();
-//
-//            // Check the available stock of the book
-//            String checkStokQuery = "SELECT stok FROM buku WHERE idbuku = ?";
-//            PreparedStatement checkStokStatement = conn.prepareStatement(checkStokQuery);
-//            checkStokStatement.setString(1, idBuku);
-//            ResultSet stokResult = checkStokStatement.executeQuery();
-//
-//            if (stokResult.next()) {
-//                int stok = stokResult.getInt("stok");
-//
-//                if (stok > 0 && stok >= jumlah) {
-//                    // Reduce the stock of the book
-//                    String updateStokQuery = "UPDATE buku SET stok = ? WHERE idbuku = ?";
-//                    PreparedStatement updateStokStatement = conn.prepareStatement(updateStokQuery);
-//                    updateStokStatement.setInt(1, stok - jumlah);
-//                    updateStokStatement.setString(2, idBuku);
-//                    updateStokStatement.executeUpdate();
-//
-//                    // Add the borrowing data to the "peminjaman" table
-//                    String peminjamanQuery = "INSERT INTO peminjaman (idbuku, peminjam, tanggalpinjam, tanggaltempo, jumlah) VALUES (?, ?, ?, ?, ?)";
-//                    PreparedStatement peminjamanStatement = conn.prepareStatement(peminjamanQuery);
-//                    peminjamanStatement.setString(1, idBuku);
-//                    peminjamanStatement.setString(2, peminjam);
-//                    peminjamanStatement.setDate(3, new java.sql.Date(tanggalPinjam.getTime()));
-//                    peminjamanStatement.setDate(4, new java.sql.Date(tanggalTempo.getTime()));
-//                    peminjamanStatement.setInt(5, jumlah);
-//                    peminjamanStatement.executeUpdate();
-//
-//                    JOptionPane.showMessageDialog(null, "Buku berhasil dipinjam!");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Maaf, stok buku tidak mencukupi!");
-//                }
-//            }
-//
-//            // Close the connections and statements
-//            stokResult.close();
-//            checkStokStatement.close();
-//            conn.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + ex.getMessage());
-//        }
-//    }
-
+    
     public void showDaftarBuku(JTable table) throws SQLException {
         try {
             Connection conn = Connector_db.getConnection();
