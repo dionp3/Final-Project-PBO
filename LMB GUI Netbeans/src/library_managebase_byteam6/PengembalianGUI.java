@@ -288,45 +288,7 @@ public class PengembalianGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void kembaliBuku(String idBuku, String peminjaman,  Date tanggalkembali, int jumlah) {
-    try {
-        Connection conn = Connector_db.getConnection();
-        // Mengecek stok buku yang tersedia
-        String checkStokQuery = "SELECT * FROM buku WHERE idbuku = ?";
-        PreparedStatement checkStokStatement = conn.prepareStatement(checkStokQuery);
-        checkStokStatement.setString(2, idBuku);
-        ResultSet stokResult = checkStokStatement.executeQuery();
-
-        if (stokResult.next()) {
-            int stok = stokResult.getInt("stok");
-
-            if (stok > 0) {
-                String updateStokQuery = "UPDATE buku SET stok = ? WHERE idbuku = ?";
-                PreparedStatement updateStokStatement = conn.prepareStatement(updateStokQuery);
-                updateStokStatement.setInt(1, stok + jumlah);
-                updateStokStatement.setString(2, idBuku);
-                updateStokStatement.executeUpdate();
-
-                // Menambahkan data peminjaman ke tabel "peminjaman"
-                String peminjamanQuery = "INSERT INTO peminjaman (tglkembali) VALUES (?)";
-                PreparedStatement kembaliStatement = conn.prepareStatement(peminjamanQuery);
-                kembaliStatement.setDate(6, new java.sql.Date(tanggalkembali.getTime()));
-                kembaliStatement.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "Buku berhasil dipinjam!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Maaf, stok buku habis!");
-            }
-        }
-
-        // Menutup koneksi dan pernyataan SQL
-        stokResult.close();
-        checkStokStatement.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-    }
-} 
+  
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
        String idbuku = tf_idbuku.getText();
        int jumlah = (int) spinner_jmlh.getValue();
@@ -381,86 +343,9 @@ public class PengembalianGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_logoutActionPerformed
 
     private void btn_update1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_update1ActionPerformed
-            try {
-           pengembalian.showDaftarBuku(tabel_pengembalian);
-       } catch (SQLException ex) {
-           Logger.getLogger(PeminjamanGUI.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        pengembalian.showDatafromDB(tabel_pengembalian);
     }//GEN-LAST:event_btn_update1ActionPerformed
     
-    public void kembalikanBuku(String idBuku, int jumlah) {
-    try {
-        Connection conn = Connector_db.getConnection();
-        // Mengecek stok buku yang tersedia
-        String checkStokQuery = "SELECT * FROM buku WHERE idbuku = ?";
-        PreparedStatement checkStokStatement = conn.prepareStatement(checkStokQuery);
-        checkStokStatement.setString(1, idBuku);
-        ResultSet stokResult = checkStokStatement.executeQuery();
-
-        if (stokResult.next()) {
-            int stok = stokResult.getInt("stok");
-
-            // Mengupdate stok buku setelah pengembalian
-            String updateStokQuery = "UPDATE buku SET stok = ? WHERE idbuku = ?";
-            PreparedStatement updateStokStatement = conn.prepareStatement(updateStokQuery);
-            updateStokStatement.setInt(1, stok + jumlah);
-            updateStokStatement.setString(2, idBuku);
-            updateStokStatement.executeUpdate();
-
-//             Menghapus data peminjaman buku
-            String deletePeminjamanQuery = "DELETE FROM peminjaman WHERE idbuku = ?";
-            PreparedStatement deletePeminjamanStatement = conn.prepareStatement(deletePeminjamanQuery);
-            deletePeminjamanStatement.setString(1, idBuku);
-            deletePeminjamanStatement.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Buku berhasil dikembalikan!");
-        }
-
-        // Menutup koneksi dan pernyataan SQL
-        stokResult.close();
-        checkStokStatement.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-    }
-}
-
-    public void showDatafromDB() {
-    try {
-        Connection conn = Connector_db.getConnection();
-        
-        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
-        String sql = "SELECT * FROM peminjaman";
-        PreparedStatement statement = conn.prepareStatement(sql);
-
-        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
-        ResultSet rs = statement.executeQuery();
-
-        // Mengambil metadata hasil query
-        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
-        int columnCount = rsmd.getColumnCount();
-
-        // Menghapus data sebelumnya dari tabel
-        DefaultTableModel model = (DefaultTableModel) tabel_pengembalian.getModel();
-        model.setRowCount(0);
-
-        // Menambahkan baris data ke dalam tabel
-        while (rs.next()) {
-            Object[] rowData = new Object[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                rowData[i] = rs.getObject(i + 1);
-            }
-            model.addRow(rowData);
-        }
-
-        // Menutup koneksi dan pernyataan SQL
-        rs.close();
-        statement.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-    }
-    }
     /**
      * @param args the command line arguments
      */
