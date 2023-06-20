@@ -4,6 +4,7 @@
  */
 package library_managebase_byteam6;
 
+import Class.Peminjaman;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Team 6
  */
 public class PeminjamanGUI extends javax.swing.JFrame {
+   Peminjaman peminjaman = new Peminjaman("123", "Judul Buku", "Penulis Buku", "Penerbit Buku", 10);
 
     /**
      * Creates new form Buku
@@ -315,43 +319,43 @@ public class PeminjamanGUI extends javax.swing.JFrame {
     private void tf_idbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_idbukuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_idbukuActionPerformed
-    public void showDatafromDB() {
-    try {
-        Connection conn = Connector_db.getConnection();
-        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
-        String sql = "SELECT * FROM buku";
-        PreparedStatement statement = conn.prepareStatement(sql);
-
-        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
-        ResultSet rs = statement.executeQuery();
-
-        // Mengambil metadata hasil query
-        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
-        int columnCount = rsmd.getColumnCount();
-
-        // Menghapus data sebelumnya dari tabel
-        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
-        model.setRowCount(0);
-
-        // Menambahkan baris data ke dalam tabel
-        while (rs.next()) {
-            Object[] rowData = new Object[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                rowData[i] = rs.getObject(i + 1);
-            }
-            model.addRow(rowData);
-        }
-
-        // Menutup koneksi dan pernyataan SQL
-        rs.close();
-        statement.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
-    }
-
-
-    }
+//    public void showDatafromDB() {
+//    try {
+//        Connection conn = Connector_db.getConnection();
+//        // Menyiapkan pernyataan SQL untuk mendapatkan data dari tabel
+//        String sql = "SELECT * FROM buku";
+//        PreparedStatement statement = conn.prepareStatement(sql);
+//
+//        // Menjalankan pernyataan SQL dan mendapatkan hasilnya
+//        ResultSet rs = statement.executeQuery();
+//
+//        // Mengambil metadata hasil query
+//        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+//        int columnCount = rsmd.getColumnCount();
+//
+//        // Menghapus data sebelumnya dari tabel
+//        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
+//        model.setRowCount(0);
+//
+//        // Menambahkan baris data ke dalam tabel
+//        while (rs.next()) {
+//            Object[] rowData = new Object[columnCount];
+//            for (int i = 0; i < columnCount; i++) {
+//                rowData[i] = rs.getObject(i + 1);
+//            }
+//            model.addRow(rowData);
+//        }
+//
+//        // Menutup koneksi dan pernyataan SQL
+//        rs.close();
+//        statement.close();
+//        conn.close();
+//    } catch (SQLException ex) {
+//        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage());
+//    }
+//
+//
+//    }
     public void pinjamBuku(String idBuku, String peminjaman, Date tanggalpinjam, Date tanggaltempo, int jumlah) {
     try {
         Connection conn = Connector_db.getConnection();
@@ -403,7 +407,7 @@ public class PeminjamanGUI extends javax.swing.JFrame {
          Date tanggalpinjam = date_pinjam.getDate();
          Date tanggaltempo = date_tempo.getDate();
          int jumlah = (int) spinner_jmlh.getValue();
-                pinjamBuku(idbuku, peminjaman, tanggalpinjam, tanggaltempo, jumlah);
+         pinjamBuku(idbuku, peminjaman, tanggalpinjam, tanggaltempo, jumlah);
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LogoutActionPerformed
@@ -443,7 +447,11 @@ public class PeminjamanGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_MemberMouseClicked
 
     private void btn_showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_showActionPerformed
-        showDatafromDB();
+       try {
+           peminjaman.showDaftarBuku(tabel_buku);
+       } catch (SQLException ex) {
+           Logger.getLogger(PeminjamanGUI.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }//GEN-LAST:event_btn_showActionPerformed
 
     private void spinner_jmlhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spinner_jmlhMouseClicked

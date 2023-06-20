@@ -11,7 +11,7 @@ public class Buku {
     protected String judul;
     protected String penulis;
     protected String penerbit;
-        protected int stok;
+    protected int stok;
 
     public Buku(String idbuku, String judul, String penulis, String penerbit, int stok) {
         this.idbuku = idbuku;
@@ -114,7 +114,7 @@ public class Buku {
 //
 //        ResultSet rs = statement.executeQuery(sql);
 //        ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
-//        DefaultTableModel model = (DefaultTableModel) tabel_buk.getModel();
+//        DefaultTableModel model = (DefaultTableModel) tabel_buku.getModel();
 //        int cols = rsmd.getColumnCount();
 //
 //        // Menghapus kolom yang ada pada tabel sebelumnya (jika ada)
